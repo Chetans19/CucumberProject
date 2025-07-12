@@ -12,40 +12,35 @@ public class DriverFactory {
 
 	 private static WebDriver driver;
 	 
-	 public static WebDriver initDriver() {
-		 
-		 if(driver == null) {
-			 ConfigReader.loadProperties();
-		        String browser = ConfigReader.getProperty("browser");
-		        String baseUrl = ConfigReader.getProperty("baseUrl");
-		        
-//		        WebDriverManager.chromedriver().browserVersion("123").setup();
-		        WebDriverManager.chromedriver()
-		        .clearDriverCache()
-		        .setup();
+	 private static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+	 
+	 public static void initDriver() {
+ 
+		 ConfigReader.loadProperties();
+	        String browser = ConfigReader.getProperty("browser");
+	        String baseUrl = ConfigReader.getProperty("baseUrl");
 
-		 
-		        driver = new ChromeDriver();
-		        
-		        driver.manage().window().maximize();
-		        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-		        
-		        driver.get(baseUrl);
-		        
-		 }
-		 
-		 return driver;
+	        if (tlDriver.get() == null) {
+	            WebDriverManager.chromedriver().setup();
+
+	            WebDriver driver = new ChromeDriver();
+	            driver.manage().window().maximize();
+	            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	            tlDriver.set(driver);
+	        }
+
+	        getDriver().get(baseUrl); 
 
 	 }
 	 
 	 public static WebDriver getDriver() {
-	        return driver;
+	        return tlDriver.get();
 	    }
 
-	    public static void quitDriver() {
-	        if (driver != null) {
-	            driver.quit();
-	            driver = null;
+	 public static void quitDriver() {
+	        if (tlDriver.get() != null) {
+	            tlDriver.get().quit();
+	            tlDriver.remove();
 	        }
 	    }
 	

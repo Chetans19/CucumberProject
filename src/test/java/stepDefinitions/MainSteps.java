@@ -11,6 +11,28 @@ public class MainSteps {
 
 	PracticePage practicePage = new PracticePage(DriverFactory.getDriver());
 	
+	@When("I click on Open Tab")
+	public void i_click_on_open_tab() throws InterruptedException {
+		practicePage.clickOpenTab();
+	}
+
+	@Then("I switch to the new tab")
+	public void i_switch_to_the_new_tab() throws InterruptedException {
+		practicePage.switchToNewTab();
+		
+		
+	}
+
+	@Then("the tab URL should contain email")
+	public void the_tab_url_should_contain() {
+	    practicePage .validateEmail();
+	}
+
+	@Then("I close the tab and return to parent")
+	public void i_close_the_tab_and_return_to_parent() {
+		practicePage.closeTab();
+	}
+	
 	@When("I click on {string}")
 	public void i_click_on(String string) {
 

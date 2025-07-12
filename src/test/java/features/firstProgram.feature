@@ -36,13 +36,13 @@ Feature: UI Automation on Rahul Shetty Academy Practice Page
     And the window title should contain "Rahul Shetty"
     Then I close the new window and return to parent
 
-  #@SwitchTab
-  #Scenario: Switch to new tab and verify
-    #When I click on "Open Tab"
-    #Then I switch to the new tab
-    #And the tab URL should contain "rahulshettyacademy"
-    #Then I close the tab and return to parent
-#
+  @SwitchTab
+  Scenario: Switch to new tab and verify
+    When I click on Open Tab
+    Then I switch to the new tab
+    And the tab URL should contain email
+    Then I close the tab and return to parent
+
   #@IFrame
   #Scenario: Interact with iframe content
     #When I switch to iframe

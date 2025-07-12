@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 public class PracticePage {
 
@@ -24,6 +25,11 @@ public class PracticePage {
     private By radio2 = By.id("radio2");
     private By dropdown = By.id("dropdown-class-example");
     
+    private By openTab = By.xpath("//a[text()='Open Tab']");
+    private By email = By.xpath("//div[@class='cont']/span[contains(text(),'info@qaclickacademy.com')]");  
+    
+    
+    
 //    private By openWindow = By.xpath("//button[text()=\"Open Window\"]");
 
     // 🧪 Actions
@@ -32,6 +38,45 @@ public class PracticePage {
     	By openWindow = By.xpath("//button[text()='"+value+"']");
     	driver.findElement(openWindow).click();
     	parentWindow = driver.getWindowHandle();
+    }
+    
+    public void validateEmail() {
+    	String emailText = driver.findElement(email).getText();
+    	Assert.assertEquals(emailText, "info@qaclickacademy.com");
+    }
+    
+    public void clickOpenTab() throws InterruptedException {
+    	
+    	parentWindow = driver.getWindowHandle();
+    	
+    	driver.findElement(openTab).click();
+    	
+    }
+    
+    public void closeTab() {
+    	
+    	driver.close(); 
+    	driver.switchTo().window(parentWindow);
+    	
+    }
+    
+    public void switchToNewTab() {
+    	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    	
+    	wait.until(driver1 -> driver1.getWindowHandles().size() >= 1);
+    	
+    	Set<String> windows = driver.getWindowHandles();
+    	
+    	
+    	for(String window: windows) {
+    		if(!window.equals(parentWindow)) {
+    			driver.switchTo().window(window);
+    			System.out.println("Current URL: " + driver.getCurrentUrl());
+    			System.out.println("Current Title: " + driver.getTitle());
+    			break;
+    		}
+    	}
+    	
     }
     
     public void switchToNewWindow() {
