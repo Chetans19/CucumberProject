@@ -3,8 +3,12 @@ package pages;
 import java.time.Duration;
 import java.util.Set;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -12,12 +16,13 @@ import org.testng.Assert;
 public class PracticePage {
 
 	WebDriver driver;
+	Actions actions;
 	
 	private String parentWindow;
 	
 	public PracticePage(WebDriver driver) {
 		this.driver = driver;
-		
+		this.actions = new Actions(driver);
 	}
 	
 	 // 🔎 Locators
@@ -28,11 +33,73 @@ public class PracticePage {
     private By openTab = By.xpath("//a[text()='Open Tab']");
     private By email = By.xpath("//div[@class='cont']/span[contains(text(),'info@qaclickacademy.com')]");  
     
+    private By iframe = By.xpath("//iframe[@id='courses-iframe']");
     
+    private By coursesTab = By.xpath("(//nav[@class='main-menu']//a[text()='Courses' and contains(@href, '/courses')])[1]");
+    
+    private By mouseHover = By.xpath("//button[@id='mousehover']");
+    
+    private By alertBtn = By.xpath("//input[@id='alertbtn']");
+    
+    private By confirmBtn = By.xpath("//input[@id='confirmbtn']");
     
 //    private By openWindow = By.xpath("//button[text()=\"Open Window\"]");
 
     // 🧪 Actions
+    
+    
+  
+    public void alertButton() throws InterruptedException {
+    	
+    	WebElement alertButton = driver.findElement(alertBtn);
+    	WebElement confirmButton = driver.findElement(confirmBtn);
+    	
+       	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", alertButton);
+       	
+    	alertButton.click();
+    	
+    	Alert alert = driver.switchTo().alert();
+    	Thread.sleep(2000);
+    	alert.accept();
+    	Thread.sleep(2000);
+    	
+    	confirmButton.click();
+    	Alert alert2 = driver.switchTo().alert();
+    	Thread.sleep(2000);
+    	alert2.accept();
+    	Thread.sleep(2000);
+    	confirmButton.click();
+    	alert2.dismiss();
+    	Thread.sleep(2000);
+    }
+    
+    public void mouseHover() throws InterruptedException {
+    	WebElement mouseHoverElement = driver.findElement(mouseHover);
+    	
+       	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", mouseHoverElement);
+       	
+    	actions.moveToElement(mouseHoverElement).perform();
+    	Thread.sleep(4000);
+    }
+    
+    public void switchToIframe() throws InterruptedException {
+    	WebElement iframeElement = driver.findElement(iframe);
+    	
+    	((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", iframeElement);
+    	Thread.sleep(4000);
+    	
+    	
+    	driver.switchTo().frame(iframeElement);
+    }
+    
+    public void clickCoursesTab() throws InterruptedException {
+    	driver.findElement(coursesTab).click();
+    	Thread.sleep(4000);
+    }
+    
+    public void switchToDefault() {
+    	driver.switchTo().defaultContent();
+    }
     
     public void selectButton(String value) {
     	By openWindow = By.xpath("//button[text()='"+value+"']");

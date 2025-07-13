@@ -43,21 +43,21 @@ Feature: UI Automation on Rahul Shetty Academy Practice Page
     And the tab URL should contain email
     Then I close the tab and return to parent
 
-  #@IFrame
-  #Scenario: Interact with iframe content
-    #When I switch to iframe
-    #And I click on "Courses" inside iframe
-    #Then I switch back to main content
-#
-  #@MouseHover
-  #Scenario: Hover on element and click option
-    #When I hover over the "Mouse Hover" button
-    #And I click on the "Top" option
+  @IFrame
+  Scenario: Interact with iframe content
+    When I switch to iframe
+    And I click on Courses inside iframe
+    Then I switch back to main content
+
+  @MouseHover
+  Scenario: Hover on element and click option
+    When I hover over the Mouse Hover button
+    #And I click on the Top option
     #Then I should be navigated to the top of the page
-#
-  #@Alerts
-  #Scenario: Handle alert and confirm dialogs
-    #When I enter "John" in the name field
+
+  @Alerts
+  Scenario: Handle alert and confirm dialogs
+    When I enter John in the name field
     #And I click on "Alert" button
     #Then alert text should be "Hello John, share this practice page..."
     #And I accept the alert

@@ -11,6 +11,33 @@ public class MainSteps {
 
 	PracticePage practicePage = new PracticePage(DriverFactory.getDriver());
 	
+	@When("I enter John in the name field")
+	public void I_enter_John_in_the_name_field() throws InterruptedException {
+		practicePage.alertButton();
+	}
+	
+	@When("I hover over the Mouse Hover button")
+	public void i_hover_over_the_mouse_hover_button() throws InterruptedException {
+	    
+		practicePage.mouseHover();
+	}
+	
+	@When("I switch to iframe")
+	public void i_switch_to_iframe() throws InterruptedException {
+		practicePage.switchToIframe();
+	}
+	
+	@When("I click on Courses inside iframe")
+	public void i_click_on_inside_iframe() throws InterruptedException {
+	    practicePage.clickCoursesTab();
+	}
+	
+	@Then("I switch back to main content")
+	public void i_switch_back_to_main_content() {
+		 practicePage.switchToDefault();
+	}
+	
+	
 	@When("I click on Open Tab")
 	public void i_click_on_open_tab() throws InterruptedException {
 		practicePage.clickOpenTab();
